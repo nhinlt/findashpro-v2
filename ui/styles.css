@@ -1,0 +1,68 @@
+/* ui/styles.css — nguồn duy nhất cho giao diện.
+   Trước đây file này rỗng còn khối CSS y hệt bị copy-paste inline ở 6 trang,
+   với màu tiêu đề #1E88E5 ở app.py nhưng #ff9900 ở các trang con. */
+
+:root {
+    --fd-accent:      #ff9900;   /* hổ phách terminal */
+    --fd-accent-dim:  #b36b00;
+    --fd-up:          #26a69a;
+    --fd-down:        #ef5350;
+    --fd-muted:       #8b949e;
+    --fd-rule:        rgba(255, 153, 0, 0.22);
+    --fd-mono:        "SF Mono", "JetBrains Mono", "Courier New", Courier, monospace;
+}
+
+/* Tiêu đề trang — dùng chung mọi trang, một màu duy nhất */
+.terminal-header {
+    font-family: var(--fd-mono);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--fd-accent);
+    margin: 0 0 .15rem 0;
+    line-height: 1.15;
+}
+
+.terminal-sub {
+    font-family: var(--fd-mono);
+    font-size: .82rem;
+    color: var(--fd-muted);
+    margin: 0 0 1.1rem 0;
+    padding-bottom: .7rem;
+    border-bottom: 1px solid var(--fd-rule);
+}
+
+/* Nhãn nguồn dữ liệu: người đọc luôn biết số đang nhìn đến từ đâu */
+.fd-badge {
+    display: inline-block;
+    font-family: var(--fd-mono);
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: .12rem .5rem;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    margin-right: .4rem;
+}
+.fd-badge.live { color: var(--fd-up); }
+.fd-badge.mock { color: var(--fd-accent); }
+
+/* Ghi chú giả định mô hình — chỗ để nói thật về giới hạn thay vì giấu đi */
+.fd-note {
+    font-family: var(--fd-mono);
+    font-size: .74rem;
+    line-height: 1.55;
+    color: var(--fd-muted);
+    border-left: 2px solid var(--fd-rule);
+    padding: .1rem 0 .1rem .7rem;
+    margin: .6rem 0 1rem 0;
+}
+.fd-note b { color: var(--fd-accent-dim); font-weight: 600; }
+
+/* Số liệu trong metric để font đều nhau, dễ so hàng */
+[data-testid="stMetricValue"] { font-family: var(--fd-mono); font-size: 1.35rem; }
+[data-testid="stMetricLabel"] { font-family: var(--fd-mono); font-size: .74rem;
+                                text-transform: uppercase; letter-spacing: .05em; }
+
+section[data-testid="stSidebar"] h3 { font-family: var(--fd-mono); color: var(--fd-accent); }
+
+.stDataFrame { font-family: var(--fd-mono); font-size: .82rem; }

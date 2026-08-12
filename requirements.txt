@@ -1,0 +1,27 @@
+# FinDash Pro — dependencies
+# Bản cũ là sản phẩm `pip freeze` thô: 61 gói, phần lớn là rác truyền lệ
+# (uvicorn, starlette, grpcio, httplib2, uritemplate, proto-plus, pyasn1...),
+# trong khi 4 gói mà toàn bộ module định lượng phụ thuộc vào — scipy, statsmodels,
+# groq, yfinance — lại KHÔNG được pin. Danh sách dưới đây chỉ gồm phụ thuộc trực tiếp.
+
+# --- Giao diện ---
+streamlit>=1.49,<2.0        # >=1.49 cho st.plotly_chart(width=...)
+plotly>=6.0,<7.0
+
+# --- Xử lý dữ liệu ---
+pandas>=2.2,<4.0
+numpy>=1.26,<3.0
+
+# --- Mô hình định lượng ---
+scipy>=1.11                 # scipy.optimize.minimize — tối ưu danh mục
+statsmodels>=0.14           # sm.OLS cho CAPM/APT và px.scatter(trendline='ols')
+
+# --- Nguồn dữ liệu ---
+requests>=2.31              # API giá DNSE/entrade
+yfinance>=0.2.40            # dữ liệu cơ bản
+
+# --- Trợ lý AI (tùy chọn: bỏ dòng này nếu không dùng trang 8) ---
+groq>=0.11
+
+# --- Kiểm thử ---
+pytest>=8.0
