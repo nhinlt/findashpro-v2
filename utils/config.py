@@ -40,10 +40,23 @@ RANDOM_SEED: int = 42              # Mọi mô phỏng phải tái lập đượ
 PRICE_UNIT: str = "nghìn VND"
 PRICE_SCALE: int = 1_000           # Nhân với hệ số này để ra VND
 
-PLOTLY_TEMPLATE: str = "plotly_dark"   # MỘT template cho toàn app, không nhấp nháy sáng/tối
-ACCENT: str = "#ff9900"                # Hổ phách kiểu terminal
-ACCENT_UP: str = "#26a69a"
-ACCENT_DOWN: str = "#ef5350"
+# BẢNG MÀU — nguồn duy nhất. Đổi ở đây là đổi toàn app (CSS đọc lại các giá trị
+# này trong ui/styles.css, biểu đồ đọc trực tiếp).
+PLOTLY_TEMPLATE: str = "plotly_white"  # MỘT template cho toàn app, nền trắng
+ACCENT: str = "#1B4F8A"                # Xanh navy — màu nhấn chính, đọc rõ trên nền trắng
+ACCENT_SOFT: str = "#E8EEF7"           # Nền nhạt cùng tông với ACCENT
+ACCENT_UP: str = "#0E8A5F"             # Xanh lá đậm — phiên tăng
+ACCENT_DOWN: str = "#C62828"           # Đỏ đậm — phiên giảm
+MUTED: str = "#5B6B7C"                 # Xám xanh — chú thích, đường tham chiếu
+GRID: str = "#E4E8EF"                  # Lưới biểu đồ
+
+# Màu tô vùng (fan chart, vùng biên độ) suy ra từ ACCENT để không lệch tông
+ACCENT_FILL_LIGHT: str = "rgba(27, 79, 138, 0.10)"
+ACCENT_FILL_MID: str = "rgba(27, 79, 138, 0.22)"
+
+# Font: sans-serif cho chữ đọc, mono chỉ dùng cho CON SỐ để so hàng thẳng cột
+FONT_SANS: str = "Inter, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
+FONT_MONO: str = "JetBrains Mono, SF Mono, Consolas, Courier New, monospace"
 
 # ----------------------------------------------------------------------------
 # DANH SÁCH CỔ PHIẾU (yêu cầu [1]: "chọn từ danh sách")
