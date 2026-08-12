@@ -21,7 +21,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from utils.config import (ALL_TICKERS, DEFAULT_PORTFOLIO, PRICE_UNIT,
+from utils.config import (ALL_TICKERS, DEFAULT_PORTFOLIO, MUTED, PRICE_UNIT,
                           RISK_FREE_RATE, TRADING_DAYS, UNIVERSE)
 
 _CSS = Path(__file__).parent / "styles.css"
@@ -60,7 +60,7 @@ def source_badge(source: str) -> None:
             unsafe_allow_html=True)
     else:
         st.markdown('<span class="fd-badge live">dữ liệu trực tiếp</span>'
-                    f'<span style="color:#8b949e;font-size:.78rem">'
+                    f'<span style="color:{MUTED};font-size:.82rem">'
                     f'Nguồn: DNSE / entrade · Đơn vị giá: {PRICE_UNIT}</span>',
                     unsafe_allow_html=True)
 
