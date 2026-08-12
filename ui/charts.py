@@ -6,7 +6,8 @@ Ba thay đổi:
   1. Khối lượng chuyển từ secondary_y (kèm mẹo range=[0, max*3]) sang subplot 2 hàng
      chia sẻ trục X. Trục khối lượng nay đọc được số thật thay vì bị ẩn nhãn.
   2. Cột khối lượng tô màu theo phiên tăng/giảm — thông tin miễn phí, bản cũ bỏ phí.
-  3. MỘT template cho toàn app (utils.config.PLOTLY_TEMPLATE). Bản cũ ép plotly_dark
+  3. MỘT template cho toàn app (utils.config.PLOTLY_TEMPLATE) — nay là nền trắng.
+     Bản cũ ép plotly_dark
      ở trang 1, 2, 4 nhưng plotly_white ở trang 5, 6 nên nền nhấp nháy khi chuyển trang.
 """
 from __future__ import annotations
@@ -15,17 +16,28 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-from utils.config import ACCENT, ACCENT_DOWN, ACCENT_UP, PLOTLY_TEMPLATE, PRICE_UNIT
+from utils.config import (ACCENT, ACCENT_DOWN, ACCENT_FILL_LIGHT, ACCENT_FILL_MID,
+                          ACCENT_UP, FONT_SANS, FONT_MONO, GRID, MUTED,
+                          PLOTLY_TEMPLATE, PRICE_UNIT)
 
 
 def apply_theme(fig: go.Figure, height: int = 520, title: str = "") -> go.Figure:
     fig.update_layout(
         template=PLOTLY_TEMPLATE, height=height, title=title or None,
         margin=dict(l=10, r=10, t=45 if title else 20, b=10),
-        hovermode="x unified", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-        legend=dict(orientation="h", yanchor="bottom", y=1.01, xanchor="right", x=1),
-        font=dict(family="SF Mono, JetBrains Mono, Courier New, monospace", size=12),
+        hovermode="x unified", plot_bgcolor="#FFFFFF", paper_bgcolor="#FFFFFF",
+        legend=dict(orientation="h", yanchor="bottom", y=1.01, xanchor="right", x=1,
+                    font=dict(family=FONT_SANS, size=12)),
+        font=dict(family=FONT_SANS, size=12, color="#16202C"),
+        title_font=dict(family=FONT_SANS, size=15, color="#16202C"),
     )
+    # Trục: nhãn số dùng mono cho thẳng cột, lưới nhạt để không át dữ liệu
+    fig.update_xaxes(showgrid=True, gridcolor=GRID, gridwidth=1, zeroline=False,
+                     linecolor=GRID, tickfont=dict(family=FONT_MONO, size=11, color=MUTED),
+                     title_font=dict(family=FONT_SANS, size=12, color=MUTED))
+    fig.update_yaxes(showgrid=True, gridcolor=GRID, gridwidth=1, zeroline=False,
+                     linecolor=GRID, tickfont=dict(family=FONT_MONO, size=11, color=MUTED),
+                     title_font=dict(family=FONT_SANS, size=12, color=MUTED))
     return fig
 
 
@@ -69,7 +81,7 @@ def create_price_volume_chart(df: pd.DataFrame, ticker: str,
 def create_fan_chart(bands: pd.DataFrame, title: str = "") -> go.Figure:
     """Biểu đồ quạt phân vị — đọc được hơn 100 đường mô phỏng chồng lên nhau."""
     fig = go.Figure()
-    pairs = [("P5", "P95", "rgba(255,153,0,0.12)"), ("P25", "P75", "rgba(255,153,0,0.25)")]
+    pairs = [("P5", "P95", ACCENT_FILL_LIGHT), ("P25", "P75", ACCENT_FILL_MID)]
     for lo, hi, fill in pairs:
         if lo in bands and hi in bands:
             fig.add_trace(go.Scatter(x=bands.index, y=bands[hi], line=dict(width=0),

@@ -1,68 +1,155 @@
-/* ui/styles.css — nguồn duy nhất cho giao diện.
-   Trước đây file này rỗng còn khối CSS y hệt bị copy-paste inline ở 6 trang,
-   với màu tiêu đề #1E88E5 ở app.py nhưng #ff9900 ở các trang con. */
+/* ui/styles.css — nguồn duy nhất cho giao diện (GIAO DIỆN SÁNG).
+   Quy tắc font: chữ để ĐỌC dùng sans-serif (Inter), chữ là SỐ dùng mono
+   (JetBrains Mono) để các chữ số thẳng cột khi so sánh trong bảng/metric.
+   Bản cũ ép mono cho toàn bộ giao diện nên đoạn văn tiếng Việt rất khó đọc. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    --fd-accent:      #ff9900;   /* hổ phách terminal */
-    --fd-accent-dim:  #b36b00;
-    --fd-up:          #26a69a;
-    --fd-down:        #ef5350;
-    --fd-muted:       #8b949e;
-    --fd-rule:        rgba(255, 153, 0, 0.22);
-    --fd-mono:        "SF Mono", "JetBrains Mono", "Courier New", Courier, monospace;
+    --fd-accent:      #1B4F8A;   /* xanh navy — màu nhấn chính */
+    --fd-accent-dim:  #123A68;
+    --fd-accent-soft: #E8EEF7;
+    --fd-up:          #0E8A5F;
+    --fd-down:        #C62828;
+    --fd-ink:         #16202C;   /* màu chữ chính */
+    --fd-muted:       #5B6B7C;   /* chú thích */
+    --fd-rule:        #E4E8EF;   /* đường kẻ, viền */
+    --fd-surface:     #F7F9FC;   /* nền phụ của thẻ */
+
+    --fd-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif;
+    --fd-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Nền trắng tuyệt đối cho vùng nội dung chính */
+.stApp, [data-testid="stAppViewContainer"] { background: #FFFFFF; }
+[data-testid="stHeader"] { background: transparent; }
+
+html, body, .stApp, [data-testid="stAppViewContainer"] * {
+    font-family: var(--fd-sans);
+}
+body, .stMarkdown, .stMarkdown p {
+    color: var(--fd-ink);
+    font-size: 0.95rem;
+    line-height: 1.65;          /* thoáng hơn, dễ đọc đoạn dài tiếng Việt */
 }
 
 /* Tiêu đề trang — dùng chung mọi trang, một màu duy nhất */
 .terminal-header {
-    font-family: var(--fd-mono);
+    font-family: var(--fd-sans);
     font-weight: 700;
+    font-size: 1.9rem;
     letter-spacing: -0.02em;
     color: var(--fd-accent);
-    margin: 0 0 .15rem 0;
-    line-height: 1.15;
+    margin: 0 0 .2rem 0;
+    line-height: 1.2;
 }
 
 .terminal-sub {
-    font-family: var(--fd-mono);
-    font-size: .82rem;
+    font-family: var(--fd-sans);
+    font-size: .92rem;
+    font-weight: 400;
     color: var(--fd-muted);
-    margin: 0 0 1.1rem 0;
-    padding-bottom: .7rem;
-    border-bottom: 1px solid var(--fd-rule);
+    margin: 0 0 1.2rem 0;
+    padding-bottom: .8rem;
+    border-bottom: 2px solid var(--fd-rule);
 }
+
+h2, h3, h4 { color: var(--fd-ink); font-weight: 600; letter-spacing: -0.01em; }
 
 /* Nhãn nguồn dữ liệu: người đọc luôn biết số đang nhìn đến từ đâu */
 .fd-badge {
     display: inline-block;
-    font-family: var(--fd-mono);
+    font-family: var(--fd-sans);
     font-size: .7rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .08em;
-    padding: .12rem .5rem;
-    border-radius: 3px;
+    letter-spacing: .06em;
+    padding: .18rem .55rem;
+    border-radius: 4px;
     border: 1px solid currentColor;
-    margin-right: .4rem;
+    margin-right: .5rem;
+    vertical-align: middle;
 }
-.fd-badge.live { color: var(--fd-up); }
-.fd-badge.mock { color: var(--fd-accent); }
+.fd-badge.live { color: var(--fd-up);     background: rgba(14, 138, 95, .07); }
+.fd-badge.mock { color: var(--fd-down);   background: rgba(198, 40, 40, .07); }
 
 /* Ghi chú giả định mô hình — chỗ để nói thật về giới hạn thay vì giấu đi */
 .fd-note {
-    font-family: var(--fd-mono);
-    font-size: .74rem;
-    line-height: 1.55;
+    font-family: var(--fd-sans);
+    font-size: .85rem;
+    line-height: 1.6;
     color: var(--fd-muted);
-    border-left: 2px solid var(--fd-rule);
-    padding: .1rem 0 .1rem .7rem;
-    margin: .6rem 0 1rem 0;
+    background: var(--fd-surface);
+    border-left: 3px solid var(--fd-accent);
+    border-radius: 0 4px 4px 0;
+    padding: .6rem .85rem;
+    margin: .7rem 0 1.1rem 0;
 }
 .fd-note b { color: var(--fd-accent-dim); font-weight: 600; }
 
-/* Số liệu trong metric để font đều nhau, dễ so hàng */
-[data-testid="stMetricValue"] { font-family: var(--fd-mono); font-size: 1.35rem; }
-[data-testid="stMetricLabel"] { font-family: var(--fd-mono); font-size: .74rem;
-                                text-transform: uppercase; letter-spacing: .05em; }
+/* SỐ LIỆU: mono để các chữ số thẳng cột, dễ so hàng */
+[data-testid="stMetricValue"] {
+    font-family: var(--fd-mono);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--fd-ink);
+    font-variant-numeric: tabular-nums;
+}
+[data-testid="stMetricLabel"] {
+    font-family: var(--fd-sans);
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--fd-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+[data-testid="stMetric"] {
+    background: var(--fd-surface);
+    border: 1px solid var(--fd-rule);
+    border-radius: 8px;
+    padding: .75rem .9rem;
+}
 
-section[data-testid="stSidebar"] h3 { font-family: var(--fd-mono); color: var(--fd-accent); }
+/* Thẻ container có viền (trang chủ dùng st.container(border=True)) */
+[data-testid="stVerticalBlockBorderWrapper"] > div > [data-testid="stVerticalBlock"] {
+    border-radius: 8px;
+}
 
-.stDataFrame { font-family: var(--fd-mono); font-size: .82rem; }
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: var(--fd-surface);
+    border-right: 1px solid var(--fd-rule);
+}
+section[data-testid="stSidebar"] h3 {
+    font-family: var(--fd-sans);
+    font-weight: 600;
+    color: var(--fd-accent);
+}
+
+/* Bảng dữ liệu: số dùng mono, nền trắng, kẻ nhạt */
+.stDataFrame, [data-testid="stDataFrame"] {
+    font-family: var(--fd-mono);
+    font-size: .85rem;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid var(--fd-rule);
+    border-radius: 6px;
+}
+
+/* Nút bấm */
+.stButton > button {
+    font-family: var(--fd-sans);
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+/* Tab */
+.stTabs [data-baseweb="tab"] {
+    font-family: var(--fd-sans);
+    font-weight: 500;
+}
+.stTabs [aria-selected="true"] { color: var(--fd-accent); }
+
+/* Code inline giữ mono */
+code, pre, kbd { font-family: var(--fd-mono); }
+code { background: var(--fd-accent-soft); color: var(--fd-accent-dim); }
